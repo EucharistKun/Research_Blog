@@ -10,13 +10,13 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Documenting my journey in the Narasimhan Lab." />
 <meta property="og:description" content="Documenting my journey in the Narasimhan Lab." />
-<link rel="canonical" href="https://eucharistkun.github.io/Research_Blog/2021/04/30/My-First-Narasimhan-Lab-Blog.html" />
-<meta property="og:url" content="https://eucharistkun.github.io/Research_Blog/2021/04/30/My-First-Narasimhan-Lab-Blog.html" />
+<link rel="canonical" href="https://eucharistkun.github.io/Research_Blog/jupyter/2021/04/30/My-First-Narasimhan-Lab-Blog.html" />
+<meta property="og:url" content="https://eucharistkun.github.io/Research_Blog/jupyter/2021/04/30/My-First-Narasimhan-Lab-Blog.html" />
 <meta property="og:site_name" content="Euch’s Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-04-30T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Documenting my journey in the Narasimhan Lab.","url":"https://eucharistkun.github.io/Research_Blog/2021/04/30/My-First-Narasimhan-Lab-Blog.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://eucharistkun.github.io/Research_Blog/2021/04/30/My-First-Narasimhan-Lab-Blog.html"},"headline":"My Early Journey in TACC, Navigating Linux, and More","dateModified":"2021-04-30T00:00:00-05:00","datePublished":"2021-04-30T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Documenting my journey in the Narasimhan Lab.","url":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/04/30/My-First-Narasimhan-Lab-Blog.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/04/30/My-First-Narasimhan-Lab-Blog.html"},"headline":"My Early Journey in TACC, Navigating Linux, and More","dateModified":"2021-04-30T00:00:00-05:00","datePublished":"2021-04-30T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Research_Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://eucharistkun.github.io/Research_Blog/feed.xml" title="Euch's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/Research_Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -81,6 +81,13 @@ window.onload = wrap_img;
     
 </span></p>
 
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Research_Blog/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
     
 
     
@@ -176,35 +183,27 @@ window.onload = wrap_img;
 </div>
 </div>
 </div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span>filename unzip.sh
+<span class="c1">#!/bin/bash</span>
 
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="nb">echo</span> <span class="s2">&quot;This unzips all the files in the directory and puts the unzipped files into directories named after the original zip folder&quot;</span>
 
-<span class="c1">#echo &quot;This unzips all the files in the directory and puts the unzipped files into directories named after the original zip folder&quot;</span>
-
-<span class="c1">#for f in *.zip; do</span>
-<span class="c1">#    unzip -d &quot;${f%.zip}_unzip&quot; &quot;$f&quot;    </span>
-<span class="c1">#done</span>
+<span class="k">for</span> f in *.zip<span class="p">;</span> <span class="k">do</span>
+    unzip -d <span class="s2">&quot;</span><span class="si">${</span><span class="nv">f</span><span class="p">%.zip</span><span class="si">}</span><span class="s2">_unzip&quot;</span> <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span>    
+<span class="k">done</span>
 
 <span class="c1"># To unzip the files and put them into a new directory outside of the current directory while renaming them:</span>
 
-<span class="c1">#for f in *.zip; do</span>
-<span class="c1">#    unzip -d &quot;/corral-repl/utexas/UKB-Imaging-Genetics/unzipped_DXA_Images/${f%.zip}_unzip&quot; &quot;$f&quot;       </span>
-<span class="c1">#done</span>
+<span class="k">for</span> f in *.zip<span class="p">;</span> <span class="k">do</span>
+    unzip -d <span class="s2">&quot;/corral-repl/utexas/UKB-Imaging-Genetics/unzipped_DXA_Images/</span><span class="si">${</span><span class="nv">f</span><span class="p">%.zip</span><span class="si">}</span><span class="s2">_unzip&quot;</span> <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span>       
+<span class="k">done</span>
 </pre></div>
 
-    </div>
 </div>
 </div>
-
 </div>
-    
-
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="FastAI-Progress-and-Notes">FastAI Progress and Notes<a class="anchor-link" href="#FastAI-Progress-and-Notes"> </a></h2><p>I have been learning ML through use of the FastAI library, which is built upon PyTorch. Here I will define the basics of machine learning as used in a binary classification model as per the fastbook lesson 1. Programming generally involves a flow chart of inputs -&gt; program -&gt; results in order to solve a problem. Machine learning involves teaching the computer to solves the problems itself by adding a few things to the work flow. By adding "weights" (or parameters) to the program (or model), one can adjust the results of the model even with the same inputs. According to fastai, "weights are just variables, and a weight assignment is a particular choice of values for those variables."</p>
@@ -216,7 +215,7 @@ window.onload = wrap_img;
 
 
 
-  </div><a class="u-url" href="/Research_Blog/2021/04/30/My-First-Narasimhan-Lab-Blog.html" hidden></a>
+  </div><a class="u-url" href="/Research_Blog/jupyter/2021/04/30/My-First-Narasimhan-Lab-Blog.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
