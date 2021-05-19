@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Building My First Binary Image Classifier | Euch’s Blog</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Building My First Binary Image Classifier" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Using FastAI to build a classifier on Hip X-rays" />
+<meta property="og:description" content="Using FastAI to build a classifier on Hip X-rays" />
+<link rel="canonical" href="https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/16/My-First-Binary-Image-Classifier.html" />
+<meta property="og:url" content="https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/16/My-First-Binary-Image-Classifier.html" />
+<meta property="og:site_name" content="Euch’s Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-05-16T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Using FastAI to build a classifier on Hip X-rays","url":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/16/My-First-Binary-Image-Classifier.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/16/My-First-Binary-Image-Classifier.html"},"headline":"Building My First Binary Image Classifier","dateModified":"2021-05-16T00:00:00-05:00","datePublished":"2021-05-16T00:00:00-05:00","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/Research_Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://eucharistkun.github.io/Research_Blog/feed.xml" title="Euch's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/Research_Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/Research_Blog/">Euch&#39;s Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/Research_Blog/about/">About Me</a><a class="page-link" href="/Research_Blog/search/">Search</a><a class="page-link" href="/Research_Blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Building My First Binary Image Classifier</h1><p class="page-description">Using FastAI to build a classifier on Hip X-rays</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-05-16T00:00:00-05:00" itemprop="datePublished">
+        May 16, 2021
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/Research_Blog/categories/#jupyter">jupyter</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/EucharistKun/Research_Blog/tree/master/_notebooks/2021-05-16-My-First-Binary-Image-Classifier.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/Research_Blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/EucharistKun/Research_Blog/master?filepath=_notebooks%2F2021-05-16-My-First-Binary-Image-Classifier.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Research_Blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/EucharistKun/Research_Blog/blob/master/_notebooks/2021-05-16-My-First-Binary-Image-Classifier.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/Research_Blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-05-16-My-First-Binary-Image-Classifier.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Hips-and-Knees-and-Spines,-Oh-My">Hips and Knees and Spines, Oh My<a class="anchor-link" href="#Hips-and-Knees-and-Spines,-Oh-My"> </a></h2><p>The crux of my first project in this lab involved taking patients from the UK Biobank who had been diagnosed with hip osteoarthritis (OA) and attempting to train a classifier using machine learning (ML) on X-rays of these patients' hips. Hip OA is typically diagnosed by looking at X-rays of the hip, specifically looking at the hip-joint space between the hip and the pelvis as well as other diagnostic markers more clearly described <a href="https://radiopaedia.org/articles/osteoarthritis-of-the-hip?lang=us">here</a>. In the image below, the hip on the left side of the picture has OA while the right hip is normal.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_xray.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>An added layer of depth to this project involved seeing if we could look at other X-rays or images from other body parts of these patients not typically used in diagnosing hip OA and whether or not these additional images could give some additional diagnostic clues or outcome predictors for hip OA. So if, for example, looking at only a hip X-ray for diagnosing hip OA had generally 85% accuracy, could looking at an X-ray of the spine improve diagnostic accuracy or tell us something about potential health outcomes for the patient. Though it seems unlikely for this particular disease, this line of thinking could be broadly applied to a variety of diseases. Say liver cancer is typically diagnosed through a liver MRI, but what if taking a brain CT scan alongside a liver MRI gave earlier diagnostic accuracy or could predict disease severity? Thinking along these lines, I set out to create and attempt to understand my first classifier - whether or not my model could predict if a patient had hip OA or not based upon just a hip X-ray.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Obtaining-the-Images-and-Organizing-Files">Obtaining the Images and Organizing Files<a class="anchor-link" href="#Obtaining-the-Images-and-Organizing-Files"> </a></h2><p>All DXA Images were obtained from the UK Biobank. Additionally, metadata files corresponding to patient hip OA diagnosis and other metadata were downloaded from the Biobank. A previous lab member had already obtained a set of 200 patients who had been diagnosed with hip OA and 200 patients without the diagnosis. I placed these patient folders containing the X-ray images into two separate folders, one labeled OA_200 and another labeled Not_OA_200. In order to distinguish between patients with hip OA versus those without, I wrote a bash script to rename all the patient folders in the OA_200 directory.</p>
+<p>(Ex: regular patient = 1000000_20158_2_0.zip, OA patient = OA_1000001_20158_2_0.zip)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># This file will rename the OA zip files to include OA in the name</span>
+
+<span class="nb">echo</span> <span class="s2">&quot;Rename OA zip files so they begin with OA&quot;</span>
+
+
+<span class="k">for</span> f in *.zip<span class="p">;</span> <span class="k">do</span>
+        <span class="nv">nf</span><span class="o">=</span><span class="s2">&quot;OA_&quot;</span><span class="si">${</span><span class="nv">f</span><span class="si">}</span>
+        mv -- <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span> <span class="s2">&quot;</span><span class="nv">$nf</span><span class="s2">&quot;</span>
+<span class="k">done</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I then unzipped the files using the code I wrote about in my last blog post. From here, I followed a <a href="https://docs.fast.ai/tutorial.medical_imaging.html">fastAI tutorial</a> about binary classification of medical images and mimicked their workflow entirely.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Dicom-Files---An-Aside">Dicom Files - An Aside<a class="anchor-link" href="#Dicom-Files---An-Aside"> </a></h3><p>"DICOM(Digital Imaging and COmmunications in Medicine) is the de-facto standard that establishes rules that allow medical images(X-Ray, MRI, CT) and associated information to be exchanged between imaging equipment from different vendors, computers, and hospitals. The DICOM format provides a suitable means that meets health infomation exchange (HIE) standards for transmision of health related data among facilites and HL7 standards which is the messaging standard that enables clinical applications to exchange data</p>
+<p>DICOM files typically have a .dcm extension and provides a means of storing data in separate ‘tags’ such as patient information as well as image/pixel data. A DICOM file consists of a header and image data sets packed into a single file. By extracting data from these tags one can access important information regarding the patient demographics, study parameters, etc."</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Building-The-Classifier">Building The Classifier<a class="anchor-link" href="#Building-The-Classifier"> </a></h2><p>First, a few Python libraries needed to be installed and imported to TACC. These libraries below are necessary for viewing dicom images and running the classifier according to the fastAI tutorial</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#from fastai.basics import *</span>
+<span class="c1">#from fastai.callback.all import *</span>
+<span class="c1">#from fastai.vision.all import *</span>
+<span class="c1">#from fastai.medical.imaging import *</span>
+<span class="c1">#import pydicom</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The following libraries were used to easily navigate the directories in TACC and generate a csv from a pandas dataframe in order to mimic the file layout in the fastAI tutorial</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#import os</span>
+<span class="c1">#import glob</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>My directory layout is as follows:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_file_layout.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Based upon the file name which follows a certain nomenclature for determining what dicom image corresponds to what body part, I pulled only left hip images from the OA_200 and Not_OA_200 directories into LeftHipImages. When I pulled the images from OA_200 to the new directory, I renamed the files to begin with "OA<em>OA</em>" so that I could generate a label based upon filename for whether the image had a hip OA diagnosis or not. I used the following code to generate a pandas df which I turned into the OA_Labels.csv file.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#files = (glob.glob(&quot;/work2/08068/ekun/frontera/OA_Hip_Files/LeftHipImages/*.dcm&quot;))</span>
+
+<span class="c1"># Creates a dataframe and populates the first column &quot;File&quot; with the file names of the dicom images</span>
+<span class="c1">#df = pd.DataFrame()</span>
+<span class="c1">#df[&quot;File&quot;] = files</span>
+
+<span class="c1"># Looks at the file column in my dataframe and labels &quot;OA&quot; or &quot;Not OA&quot; accordingly </span>
+<span class="c1"># depending on if the file has &quot;OA_OA_&quot; in the name or not</span>
+<span class="c1">#labels = []</span>
+<span class="c1">#for image in df[&quot;File&quot;]:</span>
+<span class="c1">#    if &quot;OA_OA_&quot; in image:</span>
+<span class="c1">#        labels.append(&quot;OA&quot;)</span>
+<span class="c1">#    else:</span>
+<span class="c1">#        labels.append(&quot;Not_OA&quot;)</span>
+<span class="c1">#df[&quot;Label&quot;] = labels</span>
+
+<span class="c1"># Writes the dataframe to a csv file</span>
+<span class="c1">#df.to_csv(&quot;/work2/08068/ekun/frontera/OA_Hip_Files/OA_Labels.csv&quot;, sep=&#39;\t&#39;, index = False)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The resulting dataframe looked like this</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_labels_csv.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Most of the rest of the code was directly taken from the fastAI tutorial and is presented below</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#path = Path(&quot;/work2/08068/ekun/frontera/OA_Hip_Files&quot;)</span>
+
+<span class="c1"># Obtain Dicom Images</span>
+<span class="c1">#items = get_dicom_files(&quot;/work2/08068/ekun/frontera/OA_Hip_Files/LeftHipImages&quot;)</span>
+
+<span class="c1"># Split images into training and validation set, the seed is set to 42 so the images will be split into the same groups everytime</span>
+<span class="c1">#trn,val = RandomSplitter(seed=42)(items)</span>
+
+<span class="c1">#OA = DataBlock(blocks=(ImageBlock(cls=PILDicom), CategoryBlock),</span>
+<span class="c1">#               get_x=lambda x:path/f&quot;{x[0]}&quot;,</span>
+<span class="c1">#               get_y=lambda x:x[1],</span>
+<span class="c1">#               item_tfms=Resize(224),</span>
+<span class="c1">#               batch_tfms=[*aug_transforms(size=224, do_flip=False),Normalize.from_stats(*imagenet_stats)])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#dls.show_batch(max_n=64)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_show_batch.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#learn.fine_tune(5)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_trainer.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_results.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#losses,idxs = interp.top_losses()</span>
+<span class="c1">#len(dls.valid_ds)==len(losses)==len(idxs)</span>
+<span class="c1">#interp.plot_confusion_matrix(figsize=(7,7))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_confusion_matrix.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/hip_classifier_predictor.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-Went-Wrong">What Went Wrong<a class="anchor-link" href="#What-Went-Wrong"> </a></h2><p>Clearly, the classifier did not have a very high accuracy in determining hip OA based on hip X-rays. However, any trained doctor is generally able to diagnose hip OA based upon X-rays alone. One extremely noteable source of errors lies in the fact that the metadata obtained for each patient did not specify which hip had OA. OA typically only presents itself in a single hip for each patient, and without that information, some of these hip X-rays were misleading as they could be fully healthy and not the correct hip. Furthermore, it is possible that this image classification is not as overt as we originally thought. However, that does not explain the extremely low accuracy that my classifier generated after training.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Moving-Forward">Moving Forward<a class="anchor-link" href="#Moving-Forward"> </a></h2><p>I made two more classifiers, one for left knees and one for spine X-rays following the exact same file structure layout and code as this classifier in order to see if there were any differences in accuracy. Without any meaningful OA diagnosis information, each classifier had about the same accuracy as this classifier, around 50%, no better than a coin flip. It was at this point that we decided to abandon the project for now, but the idea here could be broadly applied to different diseases and medical images.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><a class="u-url" href="/Research_Blog/jupyter/2021/05/16/My-First-Binary-Image-Classifier.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/Research_Blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/Research_Blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/Research_Blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Documenting my journey in the Narasimhan Lab.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/EucharistKun" title="EucharistKun"><svg class="svg-icon grey"><use xlink:href="/Research_Blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/EucharistKun" title="EucharistKun"><svg class="svg-icon grey"><use xlink:href="/Research_Blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
