@@ -136,6 +136,10 @@ window.onload = wrap_img;
 <ul>
 <li>/work2/08068/ekun/frontera</li>
 </ul>
+<p>as well as</p>
+<ul>
+<li>cd $SCRATCH</li>
+</ul>
 <p>The main <a href="vis.tacc.utexas.edu">website</a> used to create Jupyter Notebooks for FastAI and creating my own classifiers. All Jupyter Notebooks created on vis.tacc.utexas.edu are stored on the home directory</p>
 <p>All DXA Scans (Dicom Images) are moved to work2 from the UKBiobank directory which is located at</p>
 <ul>
@@ -149,7 +153,7 @@ window.onload = wrap_img;
 <ul>
 <li>/corral-repl/utexas/UKB-Imaging-Genetics/unzipped_DXA_Images</li>
 </ul>
-<p>This folder has all patient EID files unzipped with their images</p>
+<p>This folder has all patient EID files unzipped with their images as well as DXA images by body part</p>
 
 </div>
 </div>
@@ -163,6 +167,8 @@ window.onload = wrap_img;
 <li>pwd - Displays path of current directory</li>
 <li>ls - Displays files of current directory</li>
 <li>ls -la - Displays all files of current directory and additional information</li>
+<li>scp -r /directory /destination - recursively copies a directory or file to a destination</li>
+<li>wc -l /file - gives line count of a file or directory</li>
 <li>head filename.txt or .csv - Displays first few lines of most files</li>
 <li>vim filename.txt or .sh allows you to begin writing a file whether it be a text file or bash script <ul>
 <li>i - allows you to start writing inside vim</li>
@@ -200,13 +206,6 @@ window.onload = wrap_img;
     unzip -d <span class="s2">&quot;/corral-repl/utexas/UKB-Imaging-Genetics/unzipped_DXA_Images/</span><span class="si">${</span><span class="nv">f</span><span class="p">%.zip</span><span class="si">}</span><span class="s2">_unzip&quot;</span> <span class="s2">&quot;</span><span class="nv">$f</span><span class="s2">&quot;</span>       
 <span class="k">done</span>
 </pre></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="FastAI-Progress-and-Notes">FastAI Progress and Notes<a class="anchor-link" href="#FastAI-Progress-and-Notes"> </a></h2><p>I have been learning ML through use of the FastAI library, which is built upon PyTorch. Here I will define the basics of machine learning as used in a binary classification model as per the fastbook lesson 1. Programming generally involves a flow chart of inputs -&gt; program -&gt; results in order to solve a problem. Machine learning involves teaching the computer to solves the problems itself by adding a few things to the work flow. By adding "weights" (or parameters) to the program (or model), one can adjust the results of the model even with the same inputs. According to fastai, "weights are just variables, and a weight assignment is a particular choice of values for those variables."</p>
 
 </div>
 </div>

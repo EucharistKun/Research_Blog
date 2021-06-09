@@ -4,9 +4,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>GWAS, PWAS, and Mendelian Randomization | Euch’s Blog</title>
+<title>GWAS, PheWAS, and Mendelian Randomization | Euch’s Blog</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="GWAS, PWAS, and Mendelian Randomization" />
+<meta property="og:title" content="GWAS, PheWAS, and Mendelian Randomization" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Understanding Methods of Genetic Analysis" />
 <meta property="og:description" content="Understanding Methods of Genetic Analysis" />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-05-24T00:00:00-05:00" />
 <script type="application/ld+json">
-{"description":"Understanding Methods of Genetic Analysis","url":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/24/Understanding-Various-Genetic-Analyses.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/24/Understanding-Various-Genetic-Analyses.html"},"headline":"GWAS, PWAS, and Mendelian Randomization","dateModified":"2021-05-24T00:00:00-05:00","datePublished":"2021-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
+{"description":"Understanding Methods of Genetic Analysis","url":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/24/Understanding-Various-Genetic-Analyses.html","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://eucharistkun.github.io/Research_Blog/jupyter/2021/05/24/Understanding-Various-Genetic-Analyses.html"},"headline":"GWAS, PheWAS, and Mendelian Randomization","dateModified":"2021-05-24T00:00:00-05:00","datePublished":"2021-05-24T00:00:00-05:00","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/Research_Blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://eucharistkun.github.io/Research_Blog/feed.xml" title="Euch's Blog" /><link rel="shortcut icon" type="image/x-icon" href="/Research_Blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -71,7 +71,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">GWAS, PWAS, and Mendelian Randomization</h1><p class="page-description">Understanding Methods of Genetic Analysis</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-05-24T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">GWAS, PheWAS, and Mendelian Randomization</h1><p class="page-description">Understanding Methods of Genetic Analysis</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-05-24T00:00:00-05:00" itemprop="datePublished">
         May 24, 2021
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -124,6 +124,27 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="GWAS">GWAS<a class="anchor-link" href="#GWAS"> </a></h2><p>Genome Wide Association Studies (GWAS) look for genetic variants across the genome in a large amount of individuals to see if any variants are associated with a specific trait such as height or disease. GWA studies typically look at single nucleotide polymorphisms (SNPs), which are germline substitutions of a single nucleotide at a specific position in the genome, meaning that these are heritable differences in the human population. A GWAS is performed by taking DNA samples from many individuals and using SNP arrays to read the different genetic variants. If a particular variant is more present in people with a specific trait, the SNP is associated with the disease. Results from a GWAS are typically shown in a Manhattan plot displaying which loci on the various chromosomes are more associated with a specific trait. In the picture below taken from Wikipedia, each dot represents a SNP, and "this example is taken from a GWA study investigating microcirculation, so the tops indicates genetic variants that more often are found in individuals with constrictions in small blood vessels."</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="https://raw.githubusercontent.com/EucharistKun/Research_Blog/master/images/genetic_analyses/Manhattan_Plot.png" alt="" /></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A GWAS is a non-candidate-driven approach, in that a GWAS investigate the whole genome and not specific genes. As a result, a GWAS can tell the user which genes are associated with the disease but cannot describe any causal relations between the genes identified and the trait/disease being studied.</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
