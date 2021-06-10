@@ -77,7 +77,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      2 min read
     
 </span></p>
 
@@ -141,6 +141,15 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>A GWAS is a non-candidate-driven approach, in that a GWAS investigate the whole genome and not specific genes. As a result, a GWAS can tell the user which genes are associated with the disease but cannot describe any causal relations between the genes identified and the trait/disease being studied.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Methodology">Methodology<a class="anchor-link" href="#Methodology"> </a></h3><p>Typically, two general populations are used for a GWAS, a case group with a certain disease and a control group without the disease. The individuals in the population are genotyped for the majority of known SNPs in the human genome, which surpass a million. The allele frequences at each SNP are calculated, and an odds ratio is generated in order to compare the case and control populations. An odds ratio is "the ratio of the odds of A in the presence of B and the odds of A in the absence of B", or in the case of a GWAS, it is "the odds of case for individuals having a specific allele and the odds of case for individuals who do not have that same allele".</p>
+<p>For example, at a certain SNP, there are two main alleles, T and C. The amount of individuals in the case group having allele T is represented by A, or 4500, and the amount of individuals in the control group having allele T is represented by B, or 2000. Then the number of individuals in the case group having allele C is represented by X, or 3000, and the individuals in the control group having allele C is represented by Y, or 3500. The odds ratio for allele T is calculated as (A/B) / (X/Y) or (4500/2000) / (3000,3500).</p>
+<p>If the allele frequency is much higher in the case group than in the control group, the odds ratio will be greater than one. Furthermore, a chi-squared test is used to calculate a p-value for the significance of the generated odds ratios. For a GWAS, typically a p-value &lt; 5x10^-8 is required for an odds ratio to be meaningful.</p>
 
 </div>
 </div>
