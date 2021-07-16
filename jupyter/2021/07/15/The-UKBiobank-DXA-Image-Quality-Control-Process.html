@@ -124,6 +124,20 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Problem-1---What-File-Name-Corresponds-to-What-Image?">Problem 1 - What File Name Corresponds to What Image?<a class="anchor-link" href="#Problem-1---What-File-Name-Corresponds-to-What-Image?"> </a></h2><p>All DXA Images were obtained from the UK Biobank bulk field ID 20158 in the format of Patient-EID_Bulk-field-ID_Visit-Number.zip (6024685_20158_2_0.zip). These folders typically had 8 images, labeled in this format:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Problem-2---Full-Body-Xrays-are-Poorly-Cropped">Problem 2 - Full Body Xrays are Poorly Cropped<a class="anchor-link" href="#Problem-2---Full-Body-Xrays-are-Poorly-Cropped"> </a></h2><p>After the initial QC process and dividing up the images into a folder for each body part, I began to look at the full body transparent xrays in preparation for our project involving Human Pose Estimation (HPE). Many of the full body xrays had parts of the arm cut off from the final image, resulting in poor pose estimation from the deep learning architecture (HRnet/Resnet). In order to remove images that were cut off at the arm, I created a binary classifier to distinguish between the two types of images and applied it to the entire dataset of ~40,000 images.</p>
+
+</div>
+</div>
+</div>
 </div>
 
 
