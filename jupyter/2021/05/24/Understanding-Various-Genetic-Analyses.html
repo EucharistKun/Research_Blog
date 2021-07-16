@@ -77,7 +77,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      3 min read
     
 </span></p>
 
@@ -150,6 +150,14 @@ window.onload = wrap_img;
 <h3 id="Methodology">Methodology<a class="anchor-link" href="#Methodology"> </a></h3><p>Typically, two general populations are used for a GWAS, a case group with a certain disease and a control group without the disease. The individuals in the population are genotyped for the majority of known SNPs in the human genome, which surpass a million. The allele frequences at each SNP are calculated, and an odds ratio is generated in order to compare the case and control populations. An odds ratio is "the ratio of the odds of A in the presence of B and the odds of A in the absence of B", or in the case of a GWAS, it is "the odds of case for individuals having a specific allele and the odds of case for individuals who do not have that same allele".</p>
 <p>For example, at a certain SNP, there are two main alleles, T and C. The amount of individuals in the case group having allele T is represented by A, or 4500, and the amount of individuals in the control group having allele T is represented by B, or 2000. Then the number of individuals in the case group having allele C is represented by X, or 3000, and the individuals in the control group having allele C is represented by Y, or 3500. The odds ratio for allele T is calculated as (A/B) / (X/Y) or (4500/2000) / (3000,3500).</p>
 <p>If the allele frequency is much higher in the case group than in the control group, the odds ratio will be greater than one. Furthermore, a chi-squared test is used to calculate a p-value for the significance of the generated odds ratios. For a GWAS, typically a p-value &lt; 5x10^-8 is required for an odds ratio to be meaningful.</p>
+<p>Factors such as ethnicity, geography, sex, and age must be taken into consideration and controlled for as they could confound the results.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Imputation">Imputation<a class="anchor-link" href="#Imputation"> </a></h3><p>Another key facet used in many studies involves imputation, or the statistical inference of unobserved genetic sequences. Since it is time-consuming and costly to do genome wide sequencing on a large population, only key areas of the genome are typically sequenced and a large portion of the genome is statistically inferred through large scale genome datasets such as the HapMap or 1000 Genomes Project. Imputation is achieved by combining the GWAS data with the reference panel of haplotypes (HapMap/1000 Genomes Project) and inferring other SNPs in the genome through shared haplotypes among individuals over short sequences. For example, if we know that a patient with an A allele at base 10 always has a G allele at base 135, we can impute this information for the entire population. This method increases the number of SNPs that can be tested for association in a GWAS as well as the power of the GWAS.</p>
 
 </div>
 </div>

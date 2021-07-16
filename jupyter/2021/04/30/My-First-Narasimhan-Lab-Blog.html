@@ -138,22 +138,30 @@ window.onload = wrap_img;
 </ul>
 <p>as well as</p>
 <ul>
-<li>cd $SCRATCH</li>
+<li>/scratch1/08068/ekun</li>
 </ul>
 <p>The main <a href="vis.tacc.utexas.edu">website</a> used to create Jupyter Notebooks for FastAI and creating my own classifiers. All Jupyter Notebooks created on vis.tacc.utexas.edu are stored on the home directory</p>
-<p>All DXA Scans (Dicom Images) are moved to work2 from the UKBiobank directory which is located at</p>
+<p>All UKBiobank directory metadata and images are located at</p>
 <ul>
-<li>cd /corral-repl/utexas/UKB-Imaging-Genetics/</li>
+<li>/corral-repl/utexas/UKB-Imaging-Genetics/</li>
 </ul>
 <p>This repo has a lot which I still need to explore, but all the DXA Images are located under</p>
 <ul>
-<li>/corral-repl/utexas/UKB-Imaging-Genetics/DXA_Images</li>
+<li>/corral-repl/utexas/UKB-Imaging-Genetics/Imaging_Data/DXA/DXA_Images</li>
 </ul>
 <p>This folder has all patient EID zip files with their images.</p>
 <ul>
 <li>/corral-repl/utexas/UKB-Imaging-Genetics/unzipped_DXA_Images</li>
 </ul>
 <p>This folder has all patient EID files unzipped with their images as well as DXA images by body part</p>
+<h3 id="Other-Directories-of-Interest:">Other Directories of Interest:<a class="anchor-link" href="#Other-Directories-of-Interest:"> </a></h3><p>Generated CSV files are stored in</p>
+<ul>
+<li>/work2/08068/ekun/frontera/output_files</li>
+</ul>
+<p>Currently a copy of all unzipped DXA images and the images separated by body parts are located in</p>
+<ul>
+<li>/scratch1/08068/ekun/unzipped_DXA_Images</li>
+</ul>
 
 </div>
 </div>
@@ -167,15 +175,26 @@ window.onload = wrap_img;
 <li>pwd - Displays path of current directory</li>
 <li>ls - Displays files of current directory</li>
 <li>ls -la - Displays all files of current directory and additional information</li>
-<li>scp -r /directory /destination - recursively copies a directory or file to a destination</li>
-<li>wc -l /file - gives line count of a file</li>
+<li>wc -l /file - gives line count of a file<ul>
+<li>ls | wc -l allows you to pipe the line count command to the directory, giving the file count of the directory</li>
+</ul>
+</li>
 <li>head filename.txt or .csv - Displays first few lines of most files</li>
+<li>less -S filename.txt or .csv - Allows you to easily view files</li>
 <li>vim filename.txt or .sh allows you to begin writing a file whether it be a text file or bash script <ul>
 <li>i - allows you to start writing inside vim</li>
 <li>:wq - save and close the file</li>
 </ul>
 </li>
-<li>less -S filename.txt or .csv - Allows you to easily view files</li>
+<li>scp -r /directory /destination - recursively copies a directory or file to a destination</li>
+<li>rm /file - deletes a file<ul>
+<li>rm -r - recursively deletes a folder and everything inside</li>
+</ul>
+</li>
+<li>grep "term" /file - searches a file for given term<ul>
+<li>ls | grep "term" - searches current directory for a given term</li>
+</ul>
+</li>
 </ul>
 
 </div>
